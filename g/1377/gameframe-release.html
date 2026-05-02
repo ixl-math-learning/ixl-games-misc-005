@@ -1,0 +1,1309 @@
+<html>
+<head>
+<link href="css/roomlist.css" rel="stylesheet" type="text/css"/>
+<link href="css/checkbox.css" rel="stylesheet" type="text/css"/>
+<link href="css/maploadwindow.css" rel="stylesheet" type="text/css"/>
+<link href="css/leveleditor.css" rel="stylesheet" type="text/css"/>
+<link href="css/newbonklobby.css" rel="stylesheet" type="text/css"/>
+<link href="css/ingamechat.css" rel="stylesheet" type="text/css"/>
+<link href="css/simplemenu.css" rel="stylesheet" type="text/css"/>
+<link href="css/pagelayout.css" rel="stylesheet" type="text/css"/>
+<link href="css/skineditor.css" rel="stylesheet" type="text/css"/>
+<link href="css/mapeditor.css" rel="stylesheet" type="text/css"/>
+<link href="css/prettymenu.css" rel="stylesheet" type="text/css"/>
+<link href="css/classicactive.css" id="classicoverridecss" rel="stylesheet" type="text/css"/>
+<link href="js/colorpicker/color-picker.css" rel="stylesheet"/>
+<style>
+	
+
+	@font-face {
+	  font-family: futurept_light;
+	  src: url(fonts/fptl.otf);
+	}
+	@font-face {
+	  font-family: futurept_book;
+	  src: url(fonts/fptbook.otf);
+	}
+	@font-face {
+	  font-family: futurept_book_fixed;
+	  src: url(fonts/fptbook_fixed_5.otf);
+	}
+	@font-face {
+	  font-family: futurept_medium;
+	  src: url(fonts/fptmed.otf);
+	}
+	@font-face{
+		font-family: futurept_b1;
+		src: url(fonts/futurept_7a255.otf);
+	}
+	@font-face{
+		font-family: futurept_bold;
+		src: url(fonts/fptb.otf);
+	}
+
+	
+
+
+
+
+	#bgreplay{
+		width:100%;
+		height:100%;
+		overflow: hidden;
+		position: absolute;
+		top:0;
+	}
+
+	#gamerenderer{
+
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top:0px;
+		left:0px;
+
+		margin: auto;
+		overflow: hidden;
+		visibility: hidden;
+	}
+
+	#r3dcanvas{
+		position : absolute;
+		left: 50%;
+		top: 50%;
+		-webkit-transform: translate(-50%, -50%);
+		-moz-transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%);
+	}
+
+
+	
+
+
+</style>
+</head>
+<body>
+<div id="pagecontainer">
+<div id="bonkiocontainer">
+<div id="newbonkgamecontainer">
+<div id="newbonklobby">
+<div class="windowShadow" id="newbonklobby_playerbox">
+<div class="newbonklobby_boxtop newbonklobby_boxtop_classic">Playing</div>
+<div class="newbonklobby_elementcontainer" id="newbonklobby_playerbox_elementcontainer">
+<div id="newbonklobby_playerbox_leftelementcontainer"></div>
+<div id="newbonklobby_playerbox_rightelementcontainer"></div>
+<div id="newbonklobby_playerbox_middleline"></div>
+</div>
+<div class="brownButton brownButton_classic buttonShadow" id="newbonklobby_ffabutton">Join</div>
+<div id="newbonklobby_teambuttonscontainer">
+<div class="newbonklobby_teambutton brownButton brownButton_classic buttonShadow" id="newbonklobby_bluebutton">Join Blue</div>
+<div class="newbonklobby_teambutton brownButton brownButton_classic buttonShadow" id="newbonklobby_redbutton">Join Red</div>
+<div class="newbonklobby_teambutton brownButton brownButton_classic buttonShadow" id="newbonklobby_greenbutton">Join Green</div>
+<div class="newbonklobby_teambutton brownButton brownButton_classic buttonShadow" id="newbonklobby_yellowbutton">Join Yellow</div>
+</div>
+</div>
+<div class="brownButton brownButton_classic buttonShadow" id="newbonklobby_teamlockbutton"></div>
+<div class="windowShadow" id="newbonklobby_specbox">
+<div class="newbonklobby_boxtop newbonklobby_boxtop_classic">Spectating</div>
+<div class="newbonklobby_elementcontainer" id="newbonklobby_specbox_elementcontainer"></div>
+<div class="brownButton brownButton_classic buttonShadow" id="newbonklobby_specbutton">Spectate</div>
+</div>
+<div class="windowShadow" id="newbonklobby_chatbox">
+<div class="newbonklobby_boxtop newbonklobby_boxtop_classic">Chat</div>
+<div id="newbonklobby_chat_lowerline"></div>
+<div id="newbonklobby_chat_lowerinstruction">Press enter to send a message</div>
+<input autocomplete="one-time-code" id="newbonklobby_chat_input" type="text"/>
+<div id="newbonklobby_chat_content"></div>
+</div>
+<div class="windowShadow" id="newbonklobby_settingsbox">
+<div class="newbonklobby_boxtop newbonklobby_boxtop_classic">Game Settings</div>
+<div id="newbonklobby_modetext"></div>
+<div id="newbonklobby_mappreviewcontainer"></div>
+<div id="newbonklobby_maptext"></div>
+<div id="newbonklobby_mapauthortext"></div>
+<div id="newbonklobby_roundslabel">Rounds to win:</div>
+<input id="newbonklobby_roundsinput" maxlength="2" type="text"/>
+<div class="newbonklobby_settings_button brownButton brownButton_classic buttonShadow" id="newbonklobby_startbutton">Start</div>
+<div class="newbonklobby_settings_button brownButton brownButton_classic buttonShadow" id="newbonklobby_mapbutton">Map</div>
+<div class="newbonklobby_settings_button brownButton brownButton_classic buttonShadow" id="newbonklobby_readybutton">Ready</div>
+<div class="newbonklobby_settings_button brownButton brownButton_classic buttonShadow" id="newbonklobby_modebutton">Mode</div>
+<div class="newbonklobby_settings_button brownButton brownButton_classic buttonShadow" id="newbonklobby_teamsbutton"><span id="newbonklobby_teams_middletext">Teams Off</span></div>
+<div class="newbonklobby_settings_button brownButton brownButton_classic buttonShadow" id="newbonklobby_editorbutton">Editor</div>
+<div class="newbonklobby_settings_button brownButton brownButton_classic buttonShadow" id="newbonklobby_linkbutton"></div>
+<div class="newbonklobby_mode_menu" id="newbonklobby_mode_menu">
+<div class="newbonklobby_settings_button_mode brownButton brownButton_classic buttonShadow" id="newbonklobby_mode_classic">Classic</div>
+<div class="newbonklobby_settings_button_mode brownButton brownButton_classic buttonShadow" id="newbonklobby_mode_arrow">Arrows</div>
+<div class="newbonklobby_settings_button_mode brownButton brownButton_classic buttonShadow" id="newbonklobby_mode_deatharrows">Death Arrows</div>
+<div class="newbonklobby_settings_button_mode brownButton brownButton_classic buttonShadow" id="newbonklobby_mode_grapple">Grapple</div>
+<div class="newbonklobby_settings_button_mode brownButton brownButton_classic buttonShadow" id="newbonklobby_mode_vtol">VTOL</div>
+<div class="newbonklobby_settings_button_mode brownButton brownButton_classic buttonShadow" id="newbonklobby_mode_football">Football</div>
+</div>
+</div>
+<div id="newbonklobby_tooltip"></div>
+<div id="newbonklobby_votewindow_container">
+<div id="newbonklobby_votewindow_fade"></div>
+<div class="windowShadow" id="newbonklobby_votewindow">
+<div class="windowCloseButton brownButton brownButton_classic buttonShadow" id="newbonklobby_votewindow_close"></div>
+<div id="newbonklobby_votewindow_top">Map Vote</div>
+<div id="newbonklobby_votewindow_thumbcontainer"></div>
+<div id="newbonklobby_votewindow_maptitle">
+<span id="newbonklobby_votewindow_maptitle_name">Apocalypse</span>
+</div>
+<div id="newbonklobby_votewindow_mapauthor">
+<span id="newbonklobby_votewindow_maptitle_by">by </span>
+<span id="newbonklobby_votewindow_maptitle_author">MuadDib</span>
+</div>
+<div id="newbonklobby_votewindow_flexcontainer">
+<div class="newbonklobby_votewindow_flexitem">
+<span class="newbonklobby_votewindow_votelabel">Vote Down</span>
+<div class="newbonklobby_votewindow_votebutton brownButton brownButton_classic buttonShadow" id="newbonklobby_votewindow_votebutton_down"></div>
+<span class="newbonklobby_votewindow_votecount" id="newbonklobby_votewindow_votecount_down">321</span>
+</div>
+<div class="newbonklobby_votewindow_flexitem">
+<span class="newbonklobby_votewindow_votelabel">Vote Up</span>
+<div class="newbonklobby_votewindow_votebutton brownButton brownButton_classic buttonShadow" id="newbonklobby_votewindow_votebutton_up"></div>
+<span class="newbonklobby_votewindow_votecount" id="newbonklobby_votewindow_votecount_up">988</span>
+</div>
+<div class="newbonklobby_votewindow_flexitem">
+<span class="newbonklobby_votewindow_votelabel">Favourite</span>
+<div class="newbonklobby_votewindow_votebutton brownButton brownButton_classic buttonShadow" id="newbonklobby_votewindow_votebutton_favourite"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="mapeditorcontainer">
+<div id="mapeditor">
+<div id="mapeditor_leftbox">
+<div class="windowTopBar windowTopBar_classic">Elements</div>
+<div id="mapeditor_leftbox_scrollcontainer">
+</div>
+<div id="mapeditor_leftbox_bottombuttoncontainer">
+<div class="brownButton brownButton_classic buttonShadow mapeditor_leftbox_bottombutton" id="mapeditor_leftbox_addbutton"></div>
+<div class="brownButton brownButton_classic buttonShadow mapeditor_leftbox_bottombutton" id="mapeditor_leftbox_deletebutton"></div>
+<div class="brownButton brownButton_classic buttonShadow mapeditor_leftbox_bottombutton" id="mapeditor_leftbox_copybutton"></div>
+<div class="brownButton brownButton_classic buttonShadow mapeditor_leftbox_bottombutton" id="mapeditor_leftbox_upbutton"></div>
+<div class="brownButton brownButton_classic buttonShadow mapeditor_leftbox_bottombutton" id="mapeditor_leftbox_downbutton"></div>
+<div id="mapeditor_leftbox_newcolorbox"></div>
+</div>
+<div id="mapeditor_leftbox_copywindow">
+<div class="mapeditor_leftbox_copywindowtitle">
+							Move
+						</div>
+<div class="mapeditor_leftbox_copywindowitemrow">
+<div class="mapeditor_leftbox_copywindowitem"><input id="mapeditor_leftbox_copywindow_mvx" type="checkbox"><label for="mapeditor_leftbox_copywindow_mvx">Invert X</label></input></div>
+<div class="mapeditor_leftbox_copywindowitem"><input id="mapeditor_leftbox_copywindow_mvy" type="checkbox"><label for="mapeditor_leftbox_copywindow_mvy">Invert Y</label></input></div>
+</div>
+<div class="mapeditor_leftbox_copywindowtitle">
+							Mirror
+						</div>
+<div class="mapeditor_leftbox_copywindowitemrow">
+<div class="mapeditor_leftbox_copywindowitem"><input id="mapeditor_leftbox_copywindow_mix" type="checkbox"/><label for="mapeditor_leftbox_copywindow_mix">X</label></div>
+<div class="mapeditor_leftbox_copywindowitem"><input id="mapeditor_leftbox_copywindow_miy" type="checkbox"/><label for="mapeditor_leftbox_copywindow_miy">Y</label></div>
+</div>
+<div class="mapeditor_leftbox_copywindowtitle">
+							Rotate
+						</div>
+<div class="mapeditor_leftbox_copywindowitemrow">
+<div class="mapeditor_leftbox_copywindowitem"><input id="mapeditor_leftbox_copywindow_r-90" type="checkbox"/><label for="mapeditor_leftbox_copywindow_r-90">-90</label></div>
+<div class="mapeditor_leftbox_copywindowitem"><input id="mapeditor_leftbox_copywindow_r180" type="checkbox"/><label for="mapeditor_leftbox_copywindow_r180">180</label></div>
+<div class="mapeditor_leftbox_copywindowitem"><input id="mapeditor_leftbox_copywindow_r90" type="checkbox"/><label for="mapeditor_leftbox_copywindow_r90">+90</label></div>
+</div>
+<div class="brownButton brownButton_classic buttonShadow" id="mapeditor_leftbox_copywindowbutton">Copy</div>
+</div>
+<div id="mapeditor_leftbox_createmenucontainerleft">
+<div class="mapeditor_leftbox_createbutton brownButton brownButton_classic buttonShadow" id="mapeditor_leftbox_createmenu_gear">Gear Joint</div>
+<div class="mapeditor_leftbox_createbutton brownButton brownButton_classic buttonShadow" id="mapeditor_leftbox_createmenu_spawn">Spawn</div>
+<div class="mapeditor_leftbox_createbutton brownButton brownButton_classic buttonShadow" id="mapeditor_leftbox_createmenu_capzone">Cap Zone</div>
+<div class="mapeditor_leftbox_createbutton brownButton brownButton_classic buttonShadow" id="mapeditor_leftbox_createmenu_platform_np">Platform: No-physics</div>
+<div class="mapeditor_leftbox_createbutton brownButton brownButton_classic buttonShadow" id="mapeditor_leftbox_createmenu_platform_d">Platform: Moving </div>
+<div class="mapeditor_leftbox_createbutton brownButton brownButton_classic buttonShadow" id="mapeditor_leftbox_createmenu_platform_s">Platform: Stationary</div>
+</div>
+<div id="mapeditor_leftbox_createmenucontainerright">
+<div id="mapeditor_leftbox_createmenu_platformmenu">
+<div class="mapeditor_leftbox_createbutton brownButton brownButton_classic buttonShadow" id="mapeditor_leftbox_createmenu_platform_polygon">Polygon</div>
+<div class="mapeditor_leftbox_createbutton brownButton brownButton_classic buttonShadow" id="mapeditor_leftbox_createmenu_platform_circle">Circle</div>
+<div class="mapeditor_leftbox_createbutton brownButton brownButton_classic buttonShadow" id="mapeditor_leftbox_createmenu_platform_rectangle">Rectangle</div>
+</div>
+</div>
+</div>
+<div id="mapeditor_midbox">
+<div class="windowTopBar windowTopBar_classic">Preview</div>
+<div id="mapeditor_midbox_flexcontainer">
+<div id="mapeditor_midbox_previewcontainer">
+<div id="mapeditor_midbox_leftbuttoncontainer">
+<div class="brownButton brownButton_classic buttonShadow" id="mapeditor_midbox_undobutton"></div>
+<div class="brownButton brownButton_classic buttonShadow" id="mapeditor_midbox_redobutton"></div>
+<div class="brownButton brownButton_classic buttonShadow" id="mapeditor_midbox_settingsbutton"></div>
+<div class="brownButton brownButton_classic buttonShadow" id="mapeditor_midbox_grid"></div>
+</div>
+<div id="mapeditor_midbox_rightbuttoncontainer">
+<div class="brownButton brownButton_classic buttonShadow" id="mapeditor_midbox_zoom_reset"></div>
+<div class="brownButton brownButton_classic buttonShadow" id="mapeditor_midbox_zoom_out"></div>
+<div class="brownButton brownButton_classic buttonShadow" id="mapeditor_midbox_zoom_in"></div>
+<div class="brownButton brownButton_classic buttonShadow" id="mapeditor_midbox_playbutton"></div>
+<div class="brownButton brownButton_classic buttonShadow" id="mapeditor_midbox_testbutton"></div>
+</div>
+<span class="mapeditor_zoomtext" id="mapeditor_midbox_cancel_drawing">CANCEL DRAWING</span>
+</div>
+<div id="mapeditor_midbox_flexother">
+<div id="mapeditor_midbox_shapecount"></div>
+<div id="mapeditor_midbox_modebox">
+<span>For mode:</span>
+</div>
+<div class="windowShadow" id="mapeditor_midbox_explain"></div>
+<div id="mapeditor_midbox_buttoncontainer">
+<div class="brownButton brownButton_classic buttonShadow mapeditor_midbox_bottombuttons" id="mapeditor_midbox_newbutton">New</div>
+<div class="brownButton brownButton_classic buttonShadow mapeditor_midbox_bottombuttons" id="mapeditor_midbox_loadbutton">Load</div>
+<div class="brownButton brownButton_classic buttonShadow mapeditor_midbox_bottombuttons" id="mapeditor_midbox_savebutton">Save</div>
+</div>
+</div>
+</div>
+</div>
+<div id="mapeditor_rightbox">
+<div class="windowTopBar windowTopBar_classic">Properties</div>
+<input class="fieldShadow" id="mapeditor_rightbox_namefield" type="text" value=""/>
+<div id="mapeditor_rightbox_scrollcontainer">
+<div id="mapeditor_rightbox_platformparams">
+<div class="mapeditor_table_heading_div" id="mapeditor_rightbox_basicheading">
+<span class="mapeditor_rightbox_heading">Basic Properties</span><span class="mapeditor_rightbox_heading_pm">+</span>
+</div>
+<table class="mapeditor_rightbox_table" id="mapeditor_rightbox_table_simple">
+<tr id="mapeditor_bp_type">
+<td class="mapeditor_rightbox_table_leftcell">Move Type</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<select id="mapeditor_rightbox_table_type">
+<option value="s">Stationary</option>
+<option value="d">Free Moving</option>
+<option value="k">Kinematic</option>
+</select>
+</td>
+</tr>
+<tr id="mapeditor_bp_x">
+<td class="mapeditor_rightbox_table_leftcell">X</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_x_down">-</div>
+<input class="mapeditor_field fieldShadow" id="mapeditor_rightbox_table_x" type="text" value="0.23"/>
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_x_up">+</div>
+</td>
+</tr>
+<tr id="mapeditor_bp_y">
+<td class="mapeditor_rightbox_table_leftcell">Y</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_y_down">-</div>
+<input class="mapeditor_field fieldShadow" id="mapeditor_rightbox_table_y" type="text" value="0.23"/>
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_y_up">+</div>
+</td>
+</tr>
+<tr id="mapeditor_bp_angle">
+<td class="mapeditor_rightbox_table_leftcell">Angle</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_angle_down">-</div>
+<input class="mapeditor_field fieldShadow" id="mapeditor_rightbox_table_angle" type="text" value="0.23"/>
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_angle_up">+</div>
+</td>
+</tr>
+<tr id="mapeditor_bp_bounciness">
+<td class="mapeditor_rightbox_table_leftcell">Bounciness</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_restitution_down">-</div>
+<input class="mapeditor_field fieldShadow" id="mapeditor_rightbox_table_restitution" type="text" value="0.23"/>
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_restitution_up">+</div>
+</td>
+</tr>
+<tr id="mapeditor_bp_density">
+<td class="mapeditor_rightbox_table_leftcell">Density</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_density_down">-</div>
+<input class="mapeditor_field fieldShadow" id="mapeditor_rightbox_table_density" type="text" value="0.23"/>
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_density_up">+</div>
+</td>
+</tr>
+<tr id="mapeditor_bp_friction">
+<td class="mapeditor_rightbox_table_leftcell">Friction</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_friction_down">-</div>
+<input class="mapeditor_field fieldShadow" id="mapeditor_rightbox_table_friction" type="text" value="0.23"/>
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_friction_up">+</div>
+</td>
+</tr>
+<tr id="mapeditor_bp_fricplayers">
+<td class="mapeditor_rightbox_table_leftcell">Fric Players</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<select id="mapeditor_rightbox_table_frictionplayers">
+<option value="true">Yes</option>
+<option value="false">No</option>
+</select>
+</td>
+</tr>
+<tr id="mapeditor_bp_bullet">
+<td class="mapeditor_rightbox_table_leftcell">Anti Tunnel</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<input id="mapeditor_rightbox_table_bullet" type="checkbox">
+</input></td>
+</tr>
+<tr id="mapeditor_bp_collidegroup">
+<td class="mapeditor_rightbox_table_leftcell">Collide Group</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<select id="mapeditor_rightbox_table_filtercategory">
+<option value="a">A</option>
+<option value="b">B</option>
+<option value="c">C</option>
+<option value="d">D</option>
+</select>
+</td>
+</tr>
+<tr id="mapeditor_bp_collidewith">
+<td class="mapeditor_rightbox_table_leftcell">Collide With</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<input id="mapeditor_rightbox_table_collideP" type="checkbox"><label for="mapeditor_rightbox_table_collideP">Players</label><br/>
+<input id="mapeditor_rightbox_table_collideA" type="checkbox"><label for="mapeditor_rightbox_table_collideA">A</label>
+<input id="mapeditor_rightbox_table_collideB" type="checkbox"><label for="mapeditor_rightbox_table_collideB">B</label> <br/>
+<input id="mapeditor_rightbox_table_collideC" type="checkbox"><label for="mapeditor_rightbox_table_collideC">C</label>
+<input id="mapeditor_rightbox_table_collideD" type="checkbox"><label for="mapeditor_rightbox_table_collideD">D</label>
+</input></input></input></input></input></td>
+</tr>
+<tr id="mapeditor_bp_forcezone">
+<td class="mapeditor_rightbox_table_leftcell">Force Zone</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<input id="mapeditor_rightbox_table_forcezone" type="checkbox">
+</input></td>
+</tr>
+<tr id="mapeditor_bp_forcezonetype">
+<td class="mapeditor_rightbox_table_leftcell">Type</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<select id="mapeditor_rightbox_table_forcezonetype" style="font-size: 13px">
+<option value="0">Absolute</option>
+<option value="1">Relative</option>
+<option value="2">Center Push</option>
+<option value="3">Center Pull</option>
+</select>
+</td>
+</tr>
+<tr id="mapeditor_bp_forcezone_centerforce">
+<td class="mapeditor_rightbox_table_leftcell">Force Amount</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_forcezone_centerforce_down">-</div>
+<input class="mapeditor_field fieldShadow" id="mapeditor_rightbox_table_forcezone_centerforce" type="text" value="0.23"/>
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_forcezone_centerforce_up">+</div>
+</td>
+</tr>
+<tr id="mapeditor_bp_forcezone_x">
+<td class="mapeditor_rightbox_table_leftcell">X Amount</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_fzx_down">-</div>
+<input class="mapeditor_field fieldShadow" id="mapeditor_rightbox_table_forcezone_x" type="text" value="0.23"/>
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_fzx_up">+</div>
+</td>
+</tr>
+<tr id="mapeditor_bp_forcezone_y">
+<td class="mapeditor_rightbox_table_leftcell">Y Amount</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_fzy_down">-</div>
+<input class="mapeditor_field fieldShadow" id="mapeditor_rightbox_table_forcezone_y" type="text" value="0.23"/>
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_fzy_up">+</div>
+</td>
+</tr>
+<tr id="mapeditor_bp_forcezone_d">
+<td class="mapeditor_rightbox_table_leftcell">Push Players</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<input id="mapeditor_rightbox_table_forcezone_d" type="checkbox">
+</input></td>
+</tr>
+<tr id="mapeditor_bp_forcezone_p">
+<td class="mapeditor_rightbox_table_leftcell">Push Platforms</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<input id="mapeditor_rightbox_table_forcezone_p" type="checkbox">
+</input></td>
+</tr>
+<tr id="mapeditor_bp_forcezone_a">
+<td class="mapeditor_rightbox_table_leftcell">Push Arrows</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<input id="mapeditor_rightbox_table_forcezone_a" type="checkbox">
+</input></td>
+</tr>
+</table>
+<div class="mapeditor_table_heading_div" id="mapeditor_rightbox_dynamicheading">
+<span class="mapeditor_rightbox_heading" id="mapeditor_rightbox_dynamic_header">Movement Properties</span><span class="mapeditor_rightbox_heading_pm">+</span>
+</div>
+<table class="mapeditor_rightbox_table" id="mapeditor_rightbox_table_dynamic">
+<tr id="mapeditor_mv_xv">
+<td class="mapeditor_rightbox_table_leftcell">Start Speed X</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_xvel_down">-</div>
+<input class="mapeditor_field fieldShadow" id="mapeditor_rightbox_table_xvel" type="text" value="0.23"/>
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_xvel_up">+</div>
+</td>
+</tr>
+<tr id="mapeditor_mv_yv">
+<td class="mapeditor_rightbox_table_leftcell">Start Speed Y</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_yvel_down">-</div>
+<input class="mapeditor_field fieldShadow" id="mapeditor_rightbox_table_yvel" type="text" value="0.23"/>
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_yvel_up">+</div>
+</td>
+</tr>
+<tr id="mapeditor_mv_startspin">
+<td class="mapeditor_rightbox_table_leftcell">Start Spin</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_sspin_down">-</div>
+<input class="mapeditor_field fieldShadow" id="mapeditor_rightbox_table_av" type="text" value="0.23"/>
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_sspin_up">+</div>
+</td>
+</tr>
+<tr id="mapeditor_mv_lineardrag">
+<td class="mapeditor_rightbox_table_leftcell">Linear Drag</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_ld_down">-</div>
+<input class="mapeditor_field fieldShadow" id="mapeditor_rightbox_table_ld" type="text" value="0.23"/>
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_ld_up">+</div>
+</td>
+</tr>
+<tr id="mapeditor_mv_spindrag">
+<td class="mapeditor_rightbox_table_leftcell">Spin Drag</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_sd_down">-</div>
+<input class="mapeditor_field fieldShadow" id="mapeditor_rightbox_table_ad" type="text" value="0.23"/>
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_sd_up">+</div>
+</td>
+</tr>
+<tr id="mapeditor_mv_fixedrotation">
+<td class="mapeditor_rightbox_table_leftcell">Fixed Rotation</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<select id="mapeditor_rightbox_table_fixedrotation">
+<option value="true">Yes</option>
+<option value="false">No</option>
+</select>
+</td>
+</tr>
+<tr id="mapeditor_mv_xforce">
+<td class="mapeditor_rightbox_table_leftcell">Apply X Force</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_cfx_down">-</div>
+<input class="mapeditor_field fieldShadow" id="mapeditor_rightbox_table_cfx" type="text" value="0.23"/>
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_cfx_up">+</div>
+</td>
+</tr>
+<tr id="mapeditor_mv_yforce">
+<td class="mapeditor_rightbox_table_leftcell">Apply Y Force</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_cfy_down">-</div>
+<input class="mapeditor_field fieldShadow" id="mapeditor_rightbox_table_cfy" type="text" value="0.23"/>
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_cfy_up">+</div>
+</td>
+</tr>
+<tr id="mapeditor_mv_fd">
+<td class="mapeditor_rightbox_table_leftcell">Force Direction</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<select id="mapeditor_rightbox_table_forcedirection">
+<option value="false">Relative</option>
+<option value="true">Absolute</option>
+</select>
+</td>
+</tr>
+<tr id="mapeditor_mv_at">
+<td class="mapeditor_rightbox_table_leftcell">Apply Torque</td>
+<td class="mapeditor_rightbox_table_rightcell">
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_cft_down">-</div>
+<input class="mapeditor_field fieldShadow" id="mapeditor_rightbox_table_cft" type="text" value="0.23"/>
+<div class="mapeditor_field_button fieldShadow" id="mapeditor_cft_up">+</div>
+</td>
+</tr>
+</table>
+<div class="mapeditor_table_heading_div" id="mapeditor_rightbox_jointheading">
+<span class="mapeditor_rightbox_heading">Joint Properties</span><span class="mapeditor_rightbox_heading_pm">+</span>
+</div>
+<div id="mapeditor_rightbox_jointtablecontainer">
+<div id="mapeditor_rightbox_jointwarning">Remember to set Basic Properties &gt; Move Type to "Free Moving" or joints will do nothing</div>
+<div id="mapeditor_rightbox_newjointmenucontainer">
+<div class="brownButton brownButton_classic buttonShadow" id="mapeditor_rightbox_newjointbutton">Add New Joint</div>
+<div id="mapeditor_rightbox_newjointmenu">
+<div class="brownButton brownButton_classic buttonShadow mapeditor_rightbox_newjointmenu_item" id="mapeditor_rightbox_newjointmenu_rv">Rotating</div>
+<div class="brownButton brownButton_classic buttonShadow mapeditor_rightbox_newjointmenu_item" id="mapeditor_rightbox_newjointmenu_rod">Rod</div>
+<div class="brownButton brownButton_classic buttonShadow mapeditor_rightbox_newjointmenu_item" id="mapeditor_rightbox_newjointmenu_lpj">Follows Path</div>
+<div class="brownButton brownButton_classic buttonShadow mapeditor_rightbox_newjointmenu_item" id="mapeditor_rightbox_newjointmenu_lsj">Springy</div>
+</div>
+</div>
+</div>
+<div class="mapeditor_table_heading_div" id="mapeditor_rightbox_shapeheading">
+<span class="mapeditor_rightbox_heading">Shape Properties</span><span class="mapeditor_rightbox_heading_pm">+</span>
+</div>
+<div id="mapeditor_rightbox_shapetablecontainer">
+<div id="mapeditor_rightbox_shapeaddcontainer">
+<div class="brownButton brownButton_classic buttonShadow" id="mapeditor_rightbox_addnewshapebutton">
+									Add New Shape</div>
+<div id="mapeditor_rightbox_shapeaddmenucontainer">
+<div class="buttonShadow brownButton brownButton_classic" id="mapeditor_rightbox_shapeaddmenu_polygon">Polygon</div>
+<div class="buttonShadow brownButton brownButton_classic" id="mapeditor_rightbox_shapeaddmenu_circle">Circle</div>
+<div class="buttonShadow brownButton brownButton_classic" id="mapeditor_rightbox_shapeaddmenu_rectangle">Rectangle</div>
+</div>
+</div>
+</div>
+</div>
+<div id="mapeditor_rightbox_spawnparams">
+<table class="mapeditor_rightbox_table" id="mapeditor_rightbox_table_spawn">
+</table>
+</div>
+<div id="mapeditor_rightbox_capzoneparams">
+<table class="mapeditor_rightbox_table" id="mapeditor_rightbox_table_capzone">
+</table>
+</div>
+<div id="mapeditor_rightbox_mapparams">
+<table class="mapeditor_rightbox_table" id="mapeditor_rightbox_table_mapparams">
+</table>
+</div>
+<div id="mapeditor_rightbox_gearjointparams">
+<table class="mapeditor_rightbox_table" id="mapeditor_rightbox_table_gearjoint">
+</table>
+</div>
+</div>
+<div id="mapeditor_colorpicker">
+<span id="mapeditor_colorpicker_currentlabel">New</span>
+<span id="mapeditor_colorpicker_newlabel">Current</span>
+<br/>
+<div id="mapeditor_colorpicker_lefttile"></div>
+<div id="mapeditor_colorpicker_righttile"></div>
+<div id="mapeditor_colorpicker_canvas_container">
+<canvas height="250" id="mapeditor_colorpicker_canvas" width="200"></canvas>
+<canvas height="250" id="mapeditor_colorpicker_canvas_crosshair" width="200"></canvas>
+</div>
+<span id="mapeditor_colorpicker_saturationlabel">Saturation</span>
+<input class="slider" id="mapeditor_colorpicker_brightness_slider" max="1" min="0" step="0.01" type="range" value="0.5"/>
+<div id="mapeditor_colorpicker_existingcontainer"></div>
+<div class="brownButton brownButton_classic buttonShadow" id="mapeditor_colorpicker_cancelbutton">Cancel</div>
+<div class="brownButton brownButton_classic buttonShadow" id="mapeditor_colorpicker_savebutton">Save</div>
+<image id="mapeditor_colorpicker_crosshaircache" src="graphics/mapedtior_colorpicker_crosshair.png" style="display:none;"/>
+</div>
+</div>
+<div class="windowShadow" id="mapeditor_save_window">
+<div class="windowTopBar windowTopBar_classic">Save Map</div>
+<span id="mapeditor_save_window_label">Map name</span>
+<input class="whiteInputField windowShadow" id="mapeditor_save_window_field" maxlength="25" spellcheck="false"/>
+<select id="mapeditor_save_window_public">
+<option value="0">Private</option>
+<option value="1">Public</option>
+</select>
+<div class="brownButton brownButton_classic buttonShadow" id="mapeditor_save_window_cancel">Cancel</div>
+<div class="brownButton brownButton_classic buttonShadow" id="mapeditor_save_window_save">
+<span>Save</span>
+<div class="loader"></div>
+</div>
+</div>
+<div class="windowShadow" id="mapeditor_save_overwrite_window">
+<div class="windowTopBar windowTopBar_classic">Overwrite Map</div>
+<span id="mapeditor_save_overwrite_window_label">You already have a map saved with that name. Overwrite it?</span>
+<div class="brownButton brownButton_classic buttonShadow" id="mapeditor_save_overwrite_window_cancel">Cancel</div>
+<div class="brownButton brownButton_classic buttonShadow" id="mapeditor_save_overwrite_window_save">
+<span>Overwrite</span>
+<div class="loader"></div>
+</div>
+</div>
+</div>
+<div class="windowCloseButton brownButton brownButton_classic buttonShadow" id="mapeditor_close"></div>
+</div>
+<div id="maploadwindowcontainer">
+<div id="maploadwindow">
+<div class="windowTopBar_classic" id="maploadwindowtopbar">Level Select</div>
+<div id="maploadwindowgreybar"></div>
+<input autocomplete="off" class="fieldShadow" id="maploadwindowsearchinput" spellcheck="false" type="text" value=""/>
+<div class="brownButton brownButton_classic buttonShadow" id="maploadwindowsearchbutton">Search</div>
+<span id="maploadwindowstatustext"></span>
+<div id="maploadwindowmapscontainer"></div>
+<div id="maploadwindowhotnessslider">
+<span id="maploadwindowhotnessnewestspan">NEWEST</span>
+<span id="maploadwindowhotnesshighestratedspan">TOP RATED</span>
+<input class="compactSlider compactSlider_classic" id="maploadwindowhotnesssliderinput" max="7" min="1" step="1" type="range" value="4"/>
+</div>
+<div class="dropdown-container buttonShadow" id="maploadtypedropdown">
+<img class="dropdown-arrow" id="maploadtypedropdownarrow" src="graphics/dropdownarrow_light.png"/>
+<div class="dropdown-title dropdown_classic" id="maploadtypedropdowntitle">Select...</div>
+<div class="dropdown-option dropdown_classic" id="maploadtypedropdownoption11">PICKS</div>
+<div class="dropdown-option dropdown_classic" id="maploadtypedropdownoption8">HOT</div>
+<div class="dropdown-option dropdown_classic" id="maploadtypedropdownoption_hotdeatharrows">DEATH ARROWS</div>
+<div class="dropdown-option dropdown_classic" id="maploadtypedropdownoption7">MY MAPS</div>
+<div class="dropdown-option dropdown_classic" id="maploadtypedropdownoption10">MY FAVS</div>
+<div class="dropdown-option dropdown_classic" id="maploadtypedropdownoption1">BONK 1: TOP RATED</div>
+<div class="dropdown-option dropdown_classic" id="maploadtypedropdownoption2">BONK 1: COMMUNITY PICKS</div>
+<div class="dropdown-option dropdown_classic" id="maploadtypedropdownoption3">BONK 1: MY MAPS</div>
+<div class="dropdown-option dropdown_classic" id="maploadtypedropdownoption4">BONK 1: MY FAVS</div>
+</div>
+<div id="maploadwindowsearchoptions">
+<div class="maploadwindowoptionselected" id="maploadwindowsearchoptions_nameindicator"></div>
+<div id="maploadwindowsearchoptions_namelabel">MAP NAME</div>
+<div class="maploadwindowoptionselected" id="maploadwindowsearchoptions_authorindicator"></div>
+<div id="maploadwindowsearchoptions_authorlabel">AUTHOR</div>
+<div id="maploadwindowsearchoptions_sortby">SORT BY: BEST</div>
+</div>
+</div>
+<div class="windowCloseButton brownButton brownButton_classic buttonShadow" id="maploadwindow_close"></div>
+</div>
+<div id="gamerenderer"></div>
+<div id="ingamechatbox">
+<div id="ingamechatcontent"></div>
+<input autocomplete="one-time-code" id="ingamechatinputtext" spellcheck="false" type="text"/>
+</div>
+<div id="ingametutorial">
+<span id="ingametutorial_title"></span>
+<span id="ingametutorial_text"></span>
+</div>
+<div id="ingamevotewindow">
+<span id="ingamevotewindow_title">Good Map?</span>
+<div class="brownButton brownButton_classic buttonShadow" id="ingamevotewindow_upvote"></div>
+<div class="brownButton brownButton_classic buttonShadow" id="ingamevotewindow_downvote"></div>
+</div>
+<div id="ingamewinner">
+<div id="ingamewinner_skin">
+<div id="ingamewinner_skin_skin"></div>
+<svg height="200" id="ingamewinner_skin_x" width="200">
+<circle cx="100" cy="91" fill="none" r="82" stroke="white" stroke-width="5"></circle>
+</svg>
+</div>
+<div id="ingamewinner_top"></div>
+<div id="ingamewinner_bottom"></div>
+<div id="ingamewinner_scores">
+<div id="ingamewinner_scores_top"></div>
+<div id="ingamewinner_scores_left"></div>
+<div id="ingamewinner_scores_right"></div>
+</div>
+</div>
+<div id="ingamecountdown">
+<div id="ingamecountdown_top">Round starts in</div>
+<div id="ingamecountdown_text">3</div>
+</div>
+<div id="ingamemapcredit">
+<div id="ingamemapcredit_name">Meridian</div>
+<div id="ingamemapcredit_by">by</div>
+<div id="ingamemapcredit_author">Fantao</div>
+</div>
+<div id="ingametextwarnings">
+<div class="ingametextwarnings_warning" id="ingametextwarning_spectating">
+<p>You are currently spectating. You will join this game at the start of the next round.</p>
+</div>
+<div class="ingametextwarnings_warning" id="ingametextwarning_afk">
+<p>You are about to be kicked for inactivity, press any movement key to stay in this room!</p>
+</div>
+<div class="ingametextwarnings_warning" id="ingametextwarning_matchedsoon">
+<p>You will be matched with other players soon</p>
+</div>
+</div>
+<div id="leaveconfirmwindowcontainer">
+<div id="behindblocker"></div>
+<div class="windowShadow" id="leaveconfirmwindow">
+<div id="leaveconfirmwindow_top">Leave Game?</div>
+<div id="leaveconfirmwindow_text1">You are about to leave this game.</div>
+<div id="leaveconfirmwindow_text2">Are you sure?</div>
+<div class="brownButton brownButton_classic buttonShadow" id="leaveconfirmwindow_cancelbutton">Cancel</div>
+<div class="brownButton brownButton_classic buttonShadow" id="leaveconfirmwindow_okbutton">Ok</div>
+</div>
+</div>
+<div id="hostleaveconfirmwindowcontainer">
+<div id="behindblocker"></div>
+<div class="windowShadow" id="hostleaveconfirmwindow">
+<div id="hostleaveconfirmwindow_top">Leave Game?</div>
+<div id="hostleaveconfirmwindow_text1">You are about to leave this game.</div>
+<div id="hostleaveconfirmwindow_text2">Are you sure?</div>
+<div class="brownButton brownButton_classic buttonShadow" id="hostleaveconfirmwindow_cancelbutton">Cancel</div>
+<div class="brownButton brownButton_classic buttonShadow" id="hostleaveconfirmwindow_okbutton">Ok</div>
+<div class="brownButton brownButton_classic buttonShadow" id="hostleaveconfirmwindow_endbutton">End Room</div>
+</div>
+</div>
+</div><!--end newbonkgamecontainer-->
+<div id="mainmenuelements">
+<div id="bgreplay">
+<input id="bgreplay_timescrub" max="1" min="0.1" step="0.01" type="range" value="1"/>
+</div>
+<div id="classicmenu">
+<div id="classic_mid">
+<div class="brownButton brownButton_classic classic_mid_buttons" id="classic_mid_quickplay">Quick Play</div>
+<div class="brownButton brownButton_classic classic_mid_buttons" id="classic_mid_customgame">Custom Game</div>
+<div class="brownButton brownButton_classic classic_mid_buttons" id="classic_mid_news">News</div>
+<div class="brownButton brownButton_classic classic_mid_buttons" id="classic_mid_skins">Skins</div>
+<div class="brownButton brownButton_classic classic_mid_buttons" id="classic_mid_friendlist">Friend List</div>
+<div class="brownButton brownButton_classic classic_mid_buttons" id="classic_mid_tutorial">Tutorial</div>
+</div>
+</div>
+<div class="windowShadow" id="autoLoginContainer">
+<div class="windowTopBar windowTopBar_classic" id="autoLogin_topbar">Welcome Back</div>
+<div class="windowShadow" id="autoLogin_text"></div>
+<div class="brownButton brownButton_classic buttonShadow" id="autoLogin_cancelButton">Cancel</div>
+</div>
+<div id="guestOrAccountContainer">
+<div class="windowShadow" id="guestOrAccountContainer_guestBox">
+<div class="windowTopBar windowTopBar_classic">Guest</div>
+<div class="guestOrAccountContainerLabelBox guestOrAccountContainerLabelSingleLine">Play without an account</div>
+<div class="brownButton brownButton_classic buttonShadow thickerText" id="guestOrAccountContainer_guestButton">Play as Guest</div>
+</div>
+<div class="windowShadow" id="guestOrAccountContainer_accountBox">
+<div class="windowTopBar windowTopBar_classic">Account</div>
+<div class="guestOrAccountContainerLabelBox">Creating an account allows you to level up, create maps, and add friends</div>
+<div class="brownButton brownButton_classic buttonShadow thickerText" id="guestOrAccountContainer_accountButton">Login or Register</div>
+</div>
+</div>
+<div class="windowShadow" id="guestContainer">
+<div class="windowTopBar windowTopBar_classic" id="guest_topbar">Guest Settings</div>
+<div id="guest_skinbox"></div>
+<div id="guest_namelabel">Choose Your Name</div>
+<input class="loginwindow_field fieldShadow" id="guest_nametext" maxlength="15" type="text" value="New Player"/>
+<div id="guest_colorlabel">Color</div>
+<div class="brownButton brownButton_classic buttonShadow thickerText" id="guestPlayButton">Play as Guest</div>
+<div class="windowCloseButton brownButton brownButton_classic buttonShadow" id="guest_close"></div>
+</div>
+<div id="accountContainer">
+<div class="windowShadow" id="loginwindow">
+<div class="windowTopBar windowTopBar_classic" id="loginwindow_topbar">Log In</div>
+<div id="loginwindow_usernamelabel">Username</div>
+<div id="loginwindow_passwordlabel">Password</div>
+<form>
+<input autocomplete="username" class="usernameField loginwindow_field fieldShadow" id="loginwindow_username"/>
+<input autocomplete="current-password" class="passwordField loginwindow_field fieldShadow" id="loginwindow_password" type="password"/>
+</form>
+<label class="control control-checkbox login_remember_container">
+<div id="loginwindow_remember_label">Stay logged in</div>
+<input id="loginwindow_remember_checkbox" type="checkbox">
+<div class="control_indicator"></div>
+</input></label>
+<div class="brownButton brownButton_classic buttonShadow thickerText" id="loginwindow_submitbutton">
+<span class="nomouse">Log In</span>
+<div class="loader"></div>
+</div>
+</div>
+<div class="windowShadow" id="registerwindow">
+<div class="windowTopBar windowTopBar_classic" id="registerwindow_topbar">Register</div>
+<div id="registerwindow_usernamelabel">Choose a username</div>
+<div id="registerwindow_passwordlabel">Choose a password</div>
+<div id="registerwindow_explain"></div>
+<form>
+<input autocomplete="username" class="usernameField loginwindow_field fieldShadow" id="registerwindow_username"/>
+<input autocomplete="new-password" class="passwordField loginwindow_field fieldShadow" id="registerwindow_password" type="password"/>
+</form>
+<label class="control control-checkbox register_remember_container">
+<div id="registerwindow_remember_label">Stay logged in</div>
+<input id="registerwindow_remember_checkbox" type="checkbox">
+<div class="control_indicator"></div>
+</input></label>
+<div class="brownButton brownButton_classic buttonShadow thickerText" id="registerwindow_submitbutton">
+<span class="nomouse">Register</span>
+<div class="loader"></div>
+</div>
+</div>
+<div class="windowCloseButton brownButton brownButton_classic buttonShadow" id="account_close"></div>
+<div id="loginfieldtip">
+<div id="loginfieldtippointer"></div>
+<span id="loginfieldtip_text">Start Text</span>
+</div>
+<div id="registerfieldtip">
+<div id="registerfieldtippointer"></div>
+<span id="registerfieldtip_text">Start Text</span>
+</div>
+</div>
+<div class="windowShadow" id="skinmanager">
+<div class="windowTopBar windowTopBar_classic">Skin Manager</div>
+<div id="skinmanager_allicons">
+<div class="skinmanager_iconcontainer" id="skinmanager_skin1">
+<div class="skinmanager_icon" id="skinmanager_skin1_icon"></div>
+<span class="skinmanager_activetext" id="skinmanager_skin1_activetext">Active</span>
+</div>
+<div class="skinmanager_iconcontainer" id="skinmanager_skin2">
+<div class="skinmanager_icon" id="skinmanager_skin2_icon"></div>
+<span class="skinmanager_activetext" id="skinmanager_skin2_activetext">Active</span>
+</div>
+<div class="skinmanager_iconcontainer" id="skinmanager_skin3">
+<div class="skinmanager_icon" id="skinmanager_skin3_icon"></div>
+<span class="skinmanager_activetext" id="skinmanager_skin3_activetext">Active</span>
+</div>
+<div class="skinmanager_iconcontainer" id="skinmanager_skin4">
+<div class="skinmanager_icon" id="skinmanager_skin4_icon"></div>
+<span class="skinmanager_activetext" id="skinmanager_skin4_activetext">Active</span>
+</div>
+<div class="skinmanager_iconcontainer" id="skinmanager_skin5">
+<div class="skinmanager_icon" id="skinmanager_skin5_icon"></div>
+<span class="skinmanager_activetext" id="skinmanager_skin5_activetext">Active</span>
+</div>
+</div>
+<div class="brownButton brownButton_classic buttonShadow" id="skinmanager_setactive">Set Active</div>
+<div class="brownButton brownButton_classic buttonShadow" id="skinmanager_edit">Edit</div>
+<div class="windowCloseButton brownButton brownButton_classic buttonShadow" id="skinmanager_close"></div>
+</div>
+<div id="skineditorcontainer">
+<div id="behindblocker"></div>
+<div class="windowShadow" id="skineditor_layerbox">
+<div class="windowTopBar windowTopBar_classic">Layers</div>
+<div id="skineditor_layerbox_scrollcontainer">
+<table id="skineditor_layerbox_layertable">
+<tr><td><span class="skineditor_layerbox_layername">Rectangle 1</span></td></tr>
+<tr><td><span class="skineditor_layerbox_layername">Rectangle 2</span></td></tr>
+<tr><td><span class="skineditor_layerbox_layername">Rectangle 3</span></td></tr>
+<tr><td><span class="skineditor_layerbox_layername">Empty</span></td></tr>
+<tr><td><span class="skineditor_layerbox_layername">Face 1</span></td></tr>
+</table>
+</div>
+<span id="skineditor_layerbox_baselabel">Base Color</span>
+<div id="skineditor_layerbox_colorrect"></div>
+</div>
+<div class="windowShadow" id="skineditor_previewbox">
+<div class="windowTopBar windowTopBar_classic">Preview</div>
+<div id="skineditor_previewbox_skincontainer"></div>
+<div class="brownButton brownButton_classic buttonShadow" id="skineditor_cancelbutton">Cancel</div>
+<div class="brownButton brownButton_classic buttonShadow" id="skineditor_savebutton">Save</div>
+<div class="dropdown-container buttonShadow" id="skineditor_previewbox_teamdropdown">
+<img class="dropdown-arrow" id="skineditor_previewbox_teamdropdown_arrow" src="graphics/dropdownarrow_light.png"/>
+<div class="dropdown-title dropdown_classic" id="skineditor_previewbox_teamdropdown_title">FREE FOR ALL</div>
+<div class="dropdown-option dropdown_classic" id="skineditor_previewbox_teamdropdown_option1">FREE FOR ALL</div>
+<div class="dropdown-option dropdown_classic" id="skineditor_previewbox_teamdropdown_option2">RED TEAM</div>
+<div class="dropdown-option dropdown_classic" id="skineditor_previewbox_teamdropdown_option3">BLUE TEAM</div>
+<div class="dropdown-option dropdown_classic" id="skineditor_previewbox_teamdropdown_option4">GREEN TEAM</div>
+<div class="dropdown-option dropdown_classic" id="skineditor_previewbox_teamdropdown_option5">YELLOW TEAM</div>
+</div>
+</div>
+<div class="windowShadow" id="skineditor_propertiesbox">
+<table id="skineditor_propertiesbox_table">
+<tr><td class="skineditor_propertiesbox_table_leftcell">Shape</td><td class="skineditor_propertiesbox_table_rightcell"><span class="skineditor_propertiesbox_table_righttext" id="skineditor_propertiesbox_table_shape">Rectangle 1</span></td></tr>
+<tr><td class="skineditor_propertiesbox_table_leftcell">X</td><td class="skineditor_propertiesbox_table_rightcell">
+<div class="skineditor_field_button fieldShadow" id="skineditor_x_down">-</div>
+<input class="skineditor_field fieldShadow" id="skineditor_propertiesbox_table_x" type="text" value="0.23"/>
+<div class="skineditor_field_button fieldShadow" id="skineditor_x_up">+</div>
+</td></tr>
+<tr><td class="skineditor_propertiesbox_table_leftcell">Y</td><td class="skineditor_propertiesbox_table_rightcell">
+<div class="skineditor_field_button fieldShadow" id="skineditor_y_down">-</div>
+<input class="skineditor_field fieldShadow" id="skineditor_propertiesbox_table_y" type="text" value="3.22"/>
+<div class="skineditor_field_button fieldShadow" id="skineditor_y_up">+</div>
+</td></tr>
+<tr><td class="skineditor_propertiesbox_table_leftcell">Angle</td><td class="skineditor_propertiesbox_table_rightcell">
+<div class="skineditor_field_button fieldShadow" id="skineditor_angle_down">-</div>
+<input class="skineditor_field fieldShadow" id="skineditor_propertiesbox_table_angle" type="text" value="90"/>
+<div class="skineditor_field_button fieldShadow" id="skineditor_angle_up">+</div>
+</td></tr>
+<tr><td class="skineditor_propertiesbox_table_leftcell">Scale</td><td class="skineditor_propertiesbox_table_rightcell">
+<div class="skineditor_field_button fieldShadow" id="skineditor_scale_down">-</div>
+<input class="skineditor_field fieldShadow" id="skineditor_propertiesbox_table_scale" type="text" value="0.256"/>
+<div class="skineditor_field_button fieldShadow" id="skineditor_scale_up">+</div>
+</td></tr>
+<tr><td class="skineditor_propertiesbox_table_leftcell">Flip L/R</td><td class="skineditor_propertiesbox_table_rightcell"><span class="skineditor_propertiesbox_table_righttext" id="skineditor_propertiesbox_table_flipx">True</span></td></tr>
+<tr><td class="skineditor_propertiesbox_table_leftcell">Flip U/D</td><td class="skineditor_propertiesbox_table_rightcell"><span class="skineditor_propertiesbox_table_righttext" id="skineditor_propertiesbox_table_flipy">False</span></td></tr>
+<tr><td class="skineditor_propertiesbox_table_leftcell">Color</td><td class="skineditor_propertiesbox_table_rightcell"><div id="skineditor_propertiesbox_colorrect"></div></td></tr>
+</table>
+<div class="brownButton brownButton_classic buttonShadow skineditor_propertiesbox_layerbutton" id="skineditor_propertiesbox_upbutton">Move Layer Up</div>
+<div class="brownButton brownButton_classic buttonShadow skineditor_propertiesbox_layerbutton" id="skineditor_propertiesbox_downbutton">Move Layer Down</div>
+<div class="brownButton brownButton_classic buttonShadow skineditor_propertiesbox_layerbutton" id="skineditor_propertiesbox_deletebutton">Delete Layer</div>
+<div id="skineditor_propertiesbox_blocker">No Layer Selected</div>
+<div class="windowTopBar windowTopBar_classic">Layer Properties</div>
+</div>
+<div id="skineditor_colorpicker">
+<span id="skineditor_colorpicker_currentlabel">New</span>
+<span id="skineditor_colorpicker_newlabel">Old</span>
+<br/>
+<div id="skineditor_colorpicker_lefttile"></div>
+<div id="skineditor_colorpicker_righttile"></div>
+<div id="skineditor_colorpicker_canvas_container">
+<canvas height="293" id="skineditor_colorpicker_canvas" width="169"></canvas>
+<canvas height="293" id="skineditor_colorpicker_canvas_crosshair" width="169"></canvas>
+</div>
+<span id="skineditor_colorpicker_saturationlabel">Saturation</span>
+<input class="slider" id="skineditor_colorpicker_brightness_slider" max="1" min="0" step="0.01" type="range" value="0.5"/>
+<div id="skineditor_colorpicker_existingcontainer"></div>
+<div class="brownButton brownButton_classic buttonShadow" id="skineditor_colorpicker_cancelbutton">Cancel</div>
+<div class="brownButton brownButton_classic buttonShadow" id="skineditor_colorpicker_savebutton">Save</div>
+<image id="skineditor_colorpicker_crosshaircache" src="graphics/mapedtior_colorpicker_crosshair.png" style="display:none;"/>
+</div>
+</div>
+<div class="windowShadow" id="quickPlayWindow">
+<div class="windowTopBar windowTopBar_classic" id="quickPlayWindowtopbar">Quick Play Mode Selection</div>
+<div class="windowCloseButton brownButton brownButton_classic buttonShadow" id="quickPlayWindow_close"></div>
+<div id="quickPlayWindowModeContainer">
+<div class="quickPlayWindowModeDiv" id="quickPlayWindow_ClassicButton">
+<img class="quickPlayWindowModeThumb" src="graphics/thumb_classic_nb.jpg"/>
+<span class="quickPlayWindowText1">Classic</span>
+<span class="quickPlayWindowText2" id="quickPlayWindow_ClassicPlayerCount">? players online</span>
+<span class="quickPlayWindowText3">The original Quick Play. A selection of some of the best classic maps combined with new ones too.</span>
+</div>
+<div class="quickPlayWindowModeDiv" id="quickPlayWindow_ArrowsButton">
+<img class="quickPlayWindowModeThumb" src="graphics/thumb_arrows_nb.jpg"/>
+<span class="quickPlayWindowText1">Arrows</span>
+<span class="quickPlayWindowText2" id="quickPlayWindow_ArrowsPlayerCount">? players online</span>
+<span class="quickPlayWindowText3">Use the special key to charge up and fire arrows at your opponents. You can't aim and move at the same time! A static map rotation of simple, balanced maps.</span>
+</div>
+<div class="quickPlayWindowModeDiv" id="quickPlayWindow_GrappleButton">
+<img class="quickPlayWindowModeThumb" src="graphics/thumb_grapple_nb.jpg"/>
+<span class="quickPlayWindowText1">Grapple</span>
+<span class="quickPlayWindowText2" id="quickPlayWindow_GrapplePlayerCount">? players online</span>
+<span class="quickPlayWindowText3">Use the special key to swing around the map, but if an enemy touches you while you're on your grapple you'll be knocked off. Static map rotation.</span>
+</div>
+</div>
+</div>
+<div class="windowShadow" id="newPlayerGuideContainer">
+<div class="windowTopBar windowTopBar_classic">Tutorial</div>
+<div id="newPlayerGuide_text">Click here to get into a multiplayer game!</div>
+<div class="windowCloseButton brownButton brownButton_classic buttonShadow" id="newPlayerGuide_close"></div>
+</div>
+<div class="windowShadow" id="newswindow">
+<div class="windowTopBar windowTopBar_classic" id="newswindow_topbar">News</div>
+<div class="windowShadow" id="newswindow_white">
+<span id="newswindow_title"></span>
+<span id="newswindow_content"></span>
+</div>
+<div class="brownButton brownButton_classic buttonShadow newswindow_button" id="newswindow_back"></div>
+<div class="brownButton brownButton_classic buttonShadow newswindow_button" id="newswindow_forward"></div>
+<div class="windowCloseButton brownButton brownButton_classic buttonShadow" id="news_close"></div>
+</div>
+<div class="windowShadow" id="friendsContainer">
+<div class="windowTopBar windowTopBar_classic" id="friends_topbar">Friend List</div>
+<div class="windowCloseButton brownButton brownButton_classic buttonShadow" id="friends_close"></div>
+<div id="friends_scrollcontainer">
+<div class="friends_titles" id="friends_title_requests">Incoming Friend Requests</div>
+<table class="friends_table" id="friends_requests_table">
+<tr>
+<td class="friends_cell_name"></td>
+<td> <div class="friends_request_button brownButton brownButton_classic buttonShadow">DELETE</div> </td>
+<td> <div class="friends_request_button brownButton brownButton_classic buttonShadow">ACCEPT</div> </td>
+</tr>
+</table>
+<div class="friends_titles" id="friends_title_online">Online Friends</div>
+<table class="friends_table" id="friends_online_table">
+<tr>
+<td class="friends_cell_name"></td>
+<td> <div class="friends_request_button brownButton brownButton_classic buttonShadow">REMOVE</div> </td>
+<td> <div class="friends_request_button brownButton brownButton_classic buttonShadow">JOIN</div> </td>
+</tr>
+</table>
+<div class="friends_titles" id="friends_title_offline">Offline Friends</div>
+<table class="friends_table" id="friends_offline_table">
+<tr>
+<td class="friends_cell_name"></td>
+<td> <div class="friends_request_button brownButton brownButton_classic buttonShadow">REMOVE</div> </td>
+<td class="friends_empty_cell"></td>
+</tr>
+</table>
+<div class="friends_titles" id="friends_title_legacy">Friends From Flash Version +</div>
+<table class="friends_table" id="friends_legacy_table">
+</table>
+</div>
+<div class="friendsBottomButton brownButton brownButton_classic buttonShadow" id="friends_refresh_button">
+<span>Refresh</span>
+<div class="loader"></div>
+</div>
+<div class="friendsBottomButton brownButton brownButton_classic buttonShadow" id="friends_add_button">Add by Name</div>
+</div>
+<div id="friendsSendWindowContainer">
+<div id="behindblocker"></div>
+<div class="windowShadow" id="friendsSendWindow">
+<div class="windowTopBar windowTopBar_classic">Send Friend Request</div>
+<div class="windowCloseButton brownButton brownButton_classic buttonShadow" id="friendsSendClose"></div>
+<span id="friendsSendWindow_label">Who do you want to add as a friend?</span>
+<span id="friendsSendWindow_responselabel"></span>
+<input class="whiteInputField windowShadow" id="friendsSendWindow_name" spellcheck="false" type="text"/>
+<div class="friendsBottomButton friendsSendWindow_send brownButton brownButton_classic buttonShadow" id="friendsSendWindow_send">
+<span>Send</span>
+<div class="loader"></div>
+</div>
+</div>
+</div>
+<div id="roomListContainer">
+<div id="roomlistflexpadding"></div>
+<div class="roomlist_classic" id="roomlist">
+<div class="classicTopBar" id="roomlisttopbar"></div>
+<div class="windowCloseButton brownButton brownButton_classic buttonShadow" id="roomlist_close"></div>
+<label class="control control-checkbox">
+<div id="roomlisthidepasswordedcheckboxlabel">Hide Passworded</div>
+<input id="roomlisthidepasswordedcheckbox" type="checkbox">
+<div class="control_indicator"></div>
+</input></label>
+<div id="roomlisttableheadercontainer">
+<div id="roomlisttableheader_roomname">ROOM NAME</div>
+<div id="roomlisttableheader_players">PLAYERS</div>
+<div id="roomlisttableheader_mode">MODE</div>
+<div id="roomlisttableheader_password">PASSWORD</div>
+<div id="roomlisttableheader_levelrequired">PLAYER LEVEL</div>
+<div id="roomlisttableheader_distance">DISTANCE</div>
+</div>
+<div id="roomliststatustext"></div>
+<div class="ROOMLIST" id="roomlistscrollbox">
+<table id="roomlisttable">
+<!--<col width=56>
+						<col width=10>
+						<col width=10>
+						<col width=10>
+						<col width=9>
+						<col width=3>
+						<tr>
+						</tr>-->
+</table>
+</div>
+<div id="friendsToolTip">
+<span id="friendsToolTip_title">Friends in this room:</span>
+<span id="friendsToolTip_list"></span>
+</div>
+<div class="roomlistbottombutton brownButton brownButton_classic buttonShadow" id="roomlistjoinbutton">Join</div>
+<div class="roomlistbottombutton brownButton brownButton_classic buttonShadow" id="roomlistrefreshbutton">
+<span>Refresh</span>
+<div class="loader"></div>
+</div>
+<div class="roomlistbottombutton_dynamic roomlistbottombutton brownButton brownButton_classic buttonShadow" id="roomlistfilterbutton">Filter Modes</div>
+<div class="roomlistbottombutton brownButton brownButton_classic buttonShadow" id="roomlistcreatebutton">Create</div>
+<div class="windowShadow" id="roomlistfilterwindow">
+<div class="windowCloseButton brownButton brownButton_classic buttonShadow" id="roomlistfilterwindow_close"></div>
+<div id="roomlistfilterwindow_title">Show these modes</div>
+<div class="roomlistfilterwindow_b"><input class="roomlistfilterwindowcheckbox" id="roomlistfilterwindow_check_classic" type="checkbox"><label class="roomlistfilterwindowlabel" for="roomlistfilterwindow_check_classic">Classic</label></input></div>
+<div class="roomlistfilterwindow_a"><input class="roomlistfilterwindowcheckbox" id="roomlistfilterwindow_check_arrows" type="checkbox"><label class="roomlistfilterwindowlabel" for="roomlistfilterwindow_check_arrows">Arrows</label></input></div>
+<div class="roomlistfilterwindow_b"><input class="roomlistfilterwindowcheckbox" id="roomlistfilterwindow_check_deatharrows" type="checkbox"><label class="roomlistfilterwindowlabel" for="roomlistfilterwindow_check_deatharrows">Death Arrows</label></input></div>
+<div class="roomlistfilterwindow_a"><input class="roomlistfilterwindowcheckbox" id="roomlistfilterwindow_check_grapple" type="checkbox"><label class="roomlistfilterwindowlabel" for="roomlistfilterwindow_check_grapple">Grapple</label></input></div>
+<div class="roomlistfilterwindow_b"><input class="roomlistfilterwindowcheckbox" id="roomlistfilterwindow_check_football" type="checkbox"><label class="roomlistfilterwindowlabel" for="roomlistfilterwindow_check_football">Football</label></input></div>
+<div class="roomlistfilterwindow_a"><input class="roomlistfilterwindowcheckbox" id="roomlistfilterwindow_check_vtol" type="checkbox"><label class="roomlistfilterwindowlabel" for="roomlistfilterwindow_check_vtol">VTOL</label></input></div>
+</div>
+</div>
+<div id="roomlistflexpadding"></div>
+<div id="roomlistcreatewindowcontainer">
+<div id="behindblocker"></div>
+<div class="windowShadow" id="roomlistcreatewindow">
+<form>
+<div class="windowTopBar windowTopBar_classic"><p id="roomlistcreatewindowtoptext">Create Game</p></div>
+<div class="windowCloseButton brownButton brownButton_classic buttonShadow" id="roomlist_create_close"></div>
+<div class="roomlistcreatewindowlabel" id="roomlistcreatewindowlabel1">Game name</div>
+<input class="roomlistcreatewindowinput fieldShadow" id="roomlistcreatewindowgamename" maxlength="40" spellcheck="false" type="text"/>
+<div class="roomlistcreatewindowlabel" id="roomlistcreatewindowlabel2">Password (optional)</div>
+<input class="roomlistcreatewindowinput fieldShadow" id="roomlistcreatewindowpassword" spellcheck="false" type="text"/>
+<div class="roomlistcreatewindowlabel" id="roomlistcreatewindowlabel3">Max players</div>
+<input class="roomlistcreatewindowinput fieldShadow" id="roomlistcreatewindowmaxplayers" max="8" min="1" type="text"/>
+<div class="roomlistcreatewindowlabel" id="roomlistcreatewindowlabel4">Min level</div>
+<input class="roomlistcreatewindowinput fieldShadow" id="roomlistcreatewindowminlevel" maxlength="3" type="text" value="0"/>
+<div class="roomlistcreatewindowlabel" id="roomlistcreatewindowlabel5">Max level</div>
+<input class="roomlistcreatewindowinput fieldShadow" id="roomlistcreatewindowmaxlevel" maxlength="3" type="text" value="999"/>
+<label class="control control-checkbox" id="roomlistcreatewindowunlisted">
+<div class="roomlistcreatewindowlabel" id="roomlistcreatewindowunlistedlabel">
+						Unlisted room
+						</div>
+<input id="roomlistcreatewindowunlistedcheckbox" type="checkbox">
+<div class="control_indicator"></div>
+</input></label>
+<div class="roomlistcreatebottombutton brownButton brownButton_classic buttonShadow" id="roomlistcreatecreatebutton">Create</div>
+</form>
+</div>
+</div>
+<div id="roomlistjoinpasswordwindowcontainer">
+<div id="behindblocker"></div>
+<div class="windowShadow" id="roomlistjoinpasswordwindow">
+<div class="windowTopBar windowTopBar_classic" id="roomlistjoinpasswordtop">Password Required</div>
+<div class="windowCloseButton brownButton brownButton_classic buttonShadow" id="roomlistjoinpasswordwindowclose"></div>
+<div id="roomlistjoinpasswordwindowlabel">Password</div>
+<input autocomplete="one-time-code" class="whiteInputField windowShadow" id="roomlistjoinpasswordtext" spellcheck="false" type="text"/>
+<div class="roomlistpassbottombutton brownButton brownButton_classic buttonShadow" id="roomlistpassjoinbutton">Join</div>
+</div>
+</div>
+</div> <!-- end roomListContainer -->
+<div id="sm_connectingContainer">
+<div id="behindblocker"></div>
+<div class="windowShadow" id="sm_connectingWindow">
+<div class="windowTopBar windowTopBar_classic" id="sm_connectingWindow_topbar">Creating Game</div>
+<div class="windowShadow" id="sm_connectingWindow_text">
+					Connecting to server...<br/>test
+				</div>
+<div class="brownButton brownButton_classic buttonShadow" id="sm_connectingWindowCancelButton">Cancel</div>
+</div>
+</div>
+<div id="sm_gameChoiceWindow">
+<div class="gameChoiceButtons buttonShadow" id="sm_gameChoiceSimple">
+<span class="sm_gameChoiceT1">Simple</span>
+<span class="sm_gameChoiceT2" id="sm_gameChoiceQuickSimpleCount">? online</span>
+</div>
+<div class="gameChoiceButtons buttonShadow" id="sm_gameChoiceClassic">
+<span class="sm_gameChoiceT1">Classic</span>
+<span class="sm_gameChoiceT2" id="sm_gameChoiceQuickClassicCount">? online</span>
+</div>
+<div class="gameChoiceButtons buttonShadow" id="sm_gameChoiceArrows">
+<span class="sm_gameChoiceT1">Arrows</span>
+<span class="sm_gameChoiceT2" id="sm_gameChoiceQuickArrowsCount">? online</span>
+</div>
+<div class="gameChoiceButtons buttonShadow" id="sm_gameChoiceGrapple">
+<span class="sm_gameChoiceT1">Grapple</span>
+<span class="sm_gameChoiceT2" id="sm_gameChoiceQuickGrappleCount">Coming Soon™</span>
+</div>
+<div class="gameChoiceButtons buttonShadow" id="sm_gameChoiceCustom">
+<span class="sm_gameChoiceT1">Custom Game</span>
+<span class="sm_gameChoiceT2" id="sm_gameChoiceCustomCount">? online</span>
+</div>
+</div>
+</div> <!-- end mainmenuelements -->
+<div id="prettymenu">
+<div id="pretty_top">
+<div class="niceborderbottom" id="pretty_top_bar">
+<div id="pretty_top_small_preview"></div>
+<div class="niceborderright" id="pretty_top_name"></div>
+<div class="niceborderright" id="pretty_top_level"></div>
+<div class="niceborderright" id="pretty_top_playercount">? online</div>
+<div class="pretty_top_button niceborderleft" id="pretty_top_help">
+</div>
+<div class="pretty_top_button niceborderleft" id="pretty_top_replay">
+<div class="pretty_top_button niceborderleft niceborderbottom" id="pretty_top_replay_text"></div>
+<div class="pretty_top_button niceborderleft niceborderbottom" id="pretty_top_replay_fav">
+<div id="pretty_top_replay_fav_tooltip">Add this map to your favourites list</div>
+</div>
+<div class="pretty_top_button niceborderbottom niceborderleft" id="pretty_top_replay_back"></div>
+<div class="pretty_top_button niceborderleft niceborderbottom" id="pretty_top_replay_next"></div>
+<div class="pretty_top_button niceborderleft niceborderright niceborderbottom" id="pretty_top_replay_report">
+<div id="pretty_top_replay_report_tooltip">Report this replay if it is inappropriate</div>
+</div>
+</div>
+<div class="pretty_top_button niceborderleft" id="pretty_top_volume">
+<div class="pretty_top_button niceborderbottom niceborderleft niceborderright" id="pretty_top_volume_music"></div>
+</div>
+<div class="pretty_top_button niceborderleft" id="pretty_top_settings"></div>
+<div class="pretty_top_button niceborderleft" id="pretty_top_exit"></div>
+</div>
+</div>
+<div id="pretty_bottom">
+<div class="nicebordertop" id="pretty_bottom_bar">
+<!--<div class="pretty_lighttopline"></div>-->
+</div>
+<div id="pretty_bottom_container">
+<div class="pretty_bottom_button pretty_bottom_button_0 nicebordertop niceborderleft" id="pretty_newsbutton">NEWS</div>
+<div class="pretty_bottom_button pretty_bottom_button_1 nicebordertop niceborderleft" id="pretty_friendsbutton">FRIENDS</div>
+<div class="pretty_bottom_button pretty_bottom_button_0 nicebordertop niceborderleft" id="pretty_playbutton">PLAY</div>
+<div class="pretty_bottom_button pretty_bottom_button_1 nicebordertop niceborderleft" id="pretty_skinsbutton">SKINS</div>
+<div class="pretty_bottom_button pretty_bottom_button_0 nicebordertop niceborderleft niceborderright" id="pretty_tutorialbutton">TUTORIAL</div>
+</div>
+</div>
+<div class="windowShadow" id="settingsContainer">
+<div class="windowTopBar windowTopBar_classic" id="settings_topBar">Settings</div>
+<div class="windowCloseButton brownButton brownButton_classic buttonShadow" id="settings_close"></div>
+<span class="settingsHeading" id="settings_heading_controls">Change Controls</span>
+<table id="redefineControls_table">
+<tr>
+<th>Action</th>
+<th>Key 1</th>
+<th>Key 2</th>
+<th>Key 3</th>
+</tr>
+</table>
+<span class="settingsHeading" id="settings_heading_general">General Options</span>
+<label class="control control-checkbox settings_profanity_container">
+<div id="settings_filterprofanity_label">Filter cursing</div>
+<input id="settings_filterprofanity_checkbox" type="checkbox">
+<div class="control_indicator"></div>
+</input></label>
+<span class="settingsHeading" id="settings_heading_performance">Performance Options</span>
+<div id="settings_graphicsquality_container">
+<span id="settings_graphicsquality_label">Graphics</span>
+<select id="settings_graphicsquality">
+<option value="1">Low</option>
+<option value="2">Medium</option>
+<option value="3">High</option>
+</select>
+</div>
+<label class="control control-checkbox settings_fps_container">
+<div id="settings_fps_label">Show FPS</div>
+<input id="settings_fps_checkbox" type="checkbox">
+<div class="control_indicator"></div>
+</input></label>
+<span class="settingsHeading" id="settings_heading_account">Account Options</span>
+<div id="settings_change_password_label">Change Password</div>
+<div class="brownButton brownButton_classic buttonShadow" id="settings_cancelButton">Cancel</div>
+<div class="brownButton brownButton_classic buttonShadow" id="settings_saveButton">Save</div>
+</div>
+<div class="windowShadow" id="passwordChangeContainer">
+<div class="windowTopBar windowTopBar_classic" id="passwordChange_topBar">Change Password</div>
+<div class="windowCloseButton brownButton brownButton_classic buttonShadow" id="passwordChange_close"></div>
+<span id="passwordChange_statuslabel"></span>
+<span class="passwordChange_fieldlabel" id="passwordChange_oldpasslabel">Old password</span>
+<input autocomplete="current-password" class="passwordChange_field fieldShadow" id="passwordChange_oldpass" required="" spellcheck="false" type="password"/>
+<span class="passwordChange_fieldlabel" id="passwordChange_newpass1label">New password</span>
+<input autocomplete="new-password" class="passwordChange_field fieldShadow" id="passwordChange_newpass1" required="" spellcheck="false" type="password"/>
+<span class="passwordChange_fieldlabel" id="passwordChange_newpass2label">Confirm new password</span>
+<input autocomplete="new-password" class="passwordChange_field fieldShadow" id="passwordChange_newpass2" required="" spellcheck="false" type="password"/>
+<div class="brownButton brownButton_classic buttonShadow" id="passwordChange_cancelButton">Cancel</div>
+<div class="brownButton brownButton_classic buttonShadow" id="passwordChange_saveButton">
+<span>Change</span>
+<div class="loader"></div>
+</div>
+</div>
+</div>
+<div class="brownButton brownButton_classic buttonShadow" id="newbonkbackbutton"></div>
+<div class="brownButton brownButton_classic buttonShadow newbonkmutebutton_on" id="newbonkmutebutton"></div>
+<div class="brownButton brownButton_classic buttonShadow newbonkmusicbutton_on" id="newbonkmusicbutton"></div>
+<div id="simpleMenuContainer">
+<div id="simpleMenuConainer_UIContainer">
+</div> <!-- end ui container -->
+</div> <!-- end simplemenucontainer -->
+</div> <!-- end bonkio container -->
+<div id="xpbarcontainer">
+<div id="xpbar">
+<div id="xpbarfill"></div>
+<div id="xpbarsegmentcontainer">
+<div class="xpbarsegment"></div>
+<div class="xpbarsegment"></div>
+<div class="xpbarsegment"></div>
+<div class="xpbarsegment"></div>
+<div class="xpbarsegment"></div>
+<div class="xpbarsegment"></div>
+<div class="xpbarsegment"></div>
+<div class="xpbarsegment"></div>
+<div class="xpbarsegment"></div>
+<div class="xpbarsegment"></div>
+<div class="xpbarsegment"></div>
+<div class="xpbarsegment"></div>
+<div class="xpbarsegment"></div>
+</div>
+<span id="xpbartext">+100xp</span>
+</div>
+<!--<div id="xpbarblocker"></div>-->
+</div>
+<div id="passwarn">
+	Is your password easy to guess? Is it the same as your username? Change it in Settings or risk losing your account!
+</div>
+<script>
+
+	let positionWarning = () => {
+		let passwarn = document.getElementById("passwarn");
+		let bonkiocontainer = document.getElementById("bonkiocontainer");
+		let pagecontainer = document.getElementById("pagecontainer");
+
+		let offset = ((pagecontainer.offsetHeight - bonkiocontainer.offsetHeight) / 4) - passwarn.offsetHeight/2; 
+		passwarn.style.bottom = offset+"px";
+		passwarn.style.display = "block";
+	}
+
+	window.addEventListener('resize', () => {
+		positionWarning();
+	});
+
+	let observer = new ResizeObserver(() => {
+		positionWarning();
+	});
+
+	observer.observe(bonkiocontainer);
+
+</script>
+</div>
+</body>
+<script>
+	if ( self == top ) {
+		window.top.location.href = "https://bonk.io";
+	}
+	window.mart = 45000;
+	
+	function handleResize(){
+
+	}
+</script>
+<script src="js/Tween.js"></script>
+<script src="js/SafeTrig.js"></script>
+<script src="js/timesync.min.js"></script>
+<script src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script src="js/moment.min.js" type="text/javascript"></script>
+<script src="js/moment-timezone-with-data-10-year-range.min.js" type="text/javascript"></script>
+<script src="js/pako.js" type="text/javascript"></script>
+<script src="js/howler.min.js" type="text/javascript"></script>
+<script src="js/howler.spatial.min.js" type="text/javascript"></script>
+<script src="js/colorpicker/color-picker.js" type="text/javascript"></script>
+<script src="js/anime.min.js" type="text/javascript"></script>
+<script src="js/jQuery-FontSpy.js" type="text/javascript"></script>
+<script src="js/pson/long.js" type="text/javascript"></script>
+<script src="js/pson/bytebuffer.min.js" type="text/javascript"></script>
+<script src="js/pson/PSON.min.js" type="text/javascript"></script>
+<script src="js/pson/base64js.min.js" type="text/javascript"></script>
+<script src="js/pson/base64ArrayBuffer.js" type="text/javascript"></script>
+<script src="js/lz-string.min.js" type="text/javascript"></script>
+<script src="js/pixi-legacy-540.min.js"></script>
+<script src="js/pixi-filters-311.js"></script>
+<script src="GameResources.js"></script>
+<script data-main="js/alpha2s" src="js/require.js"></script>
+</html>
